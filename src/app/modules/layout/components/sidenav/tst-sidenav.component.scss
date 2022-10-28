@@ -1,0 +1,10 @@
+.tst-sidenav {
+    min-height: 100vh;
+    width: var(--sidenav-width);
+    background-color: var(--sidenav-background);
+    .tst-logo {
+        background-color: var(--sidenav-logo-bg);
+        height: 3.125rem;
+        padding: 0px 1.5rem;
+    }
+}
