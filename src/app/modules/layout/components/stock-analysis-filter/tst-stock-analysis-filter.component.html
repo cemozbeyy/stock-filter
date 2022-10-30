@@ -1,31 +1,36 @@
-<div class="tst-filter w-100 d-flex">
-    <div>
-        <mat-form-field appearance="fill">
-            <mat-label>Hisse Seçiniz</mat-label>
-            <mat-select [formControl]="stockType" multiple>
-                <mat-option *ngFor="let topping of stockList" [value]="topping">{{topping}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+<div class="tst-filter w-100  row">
+    <div class="col-11 d-flex">
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label>Hisse Seçiniz</mat-label>
+                <mat-select [formControl]="stockType" multiple>
+                    <mat-option *ngFor="let topping of stockList" [value]="topping">{{topping}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="ps-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Tarih Seçiniz</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input matStartDate placeholder="Start date">
+                    <input matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        </div>
+        <div class="ps-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Period Seçiniz</mat-label>
+                <select matNativeControl [(ngModel)]="selectedTime" name="time">
+                    <option *ngFor="let selectedTime of timeRange" [value]="selectedTime.timeName">
+                        {{selectedTime.timeName}}
+                    </option>
+                </select>
+            </mat-form-field>
+        </div>
     </div>
-    <div class="ps-4">
-        <mat-form-field appearance="fill">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Start date">
-                <input matEndDate placeholder="End date">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-    </div>
-    <div class="ps-4">
-        <mat-form-field appearance="fill">
-            <mat-label>Period Seçiniz</mat-label>
-            <select matNativeControl [(ngModel)]="selectedTime" name="time">
-                <option *ngFor="let selectedTime of timeRange" [value]="selectedTime.timeName">
-                    {{selectedTime.timeName}}
-                </option>
-            </select>
-        </mat-form-field>
+    <div class="col-1">
+        <button type="button">Göster</button>
     </div>
 </div>

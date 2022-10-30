@@ -51,10 +51,7 @@ export class TstChartComponent implements OnInit {
       stroke: {
         curve: "straight"
       },
-      title: {
-        text: "Product Trends by Month",
-        align: "left"
-      },
+
       grid: {
         row: {
           colors: ["#f3f3f3", "transparent"],

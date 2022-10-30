@@ -1,0 +1,19 @@
+.tst-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    border: 1px solid #ddd;
+    background-color: var(--first-color);
+
+    .tst-title {
+        th {
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 16px;
+        }
+    }
+    td {
+        text-align: center;
+        padding: 16px;
+    }
+}
