@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import icRadioButtonChecked from '@iconify/icons-ic/twotone-radio-button-checked';
+import icRadioButtonUnchecked from '@iconify/icons-ic/twotone-radio-button-unchecked';
 
 @Component({
     selector: 'tst-sidenav',
@@ -8,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 
 export class TstSidenavComponent implements OnInit {
     constructor() { }
-
+    @Input() collapsed: boolean = false;
+    icRadioButtonChecked = icRadioButtonChecked;
+    icRadioButtonUnchecked = icRadioButtonUnchecked;
     ngOnInit() { }
 }

@@ -1,0 +1,30 @@
+.tst-header {
+    width: 100%;
+    background-color: var(--first-color);
+    height: 3.125rem;
+    margin: 0px;
+    .right-side {
+        height: 1.5625rem;
+        margin: auto;
+        justify-content: flex-end;
+        mat-icon {
+            color: var(--toolbar-icon-color);
+            width: 1.5625rem;
+            margin-left: 2rem;
+            height: 1.5625rem;
+        }
+        img {
+            width: 1.5625rem;
+            height: 1.5625rem;
+            margin-left: 2rem;
+        }
+    }
+    .left-side {
+        height: 1.5625rem;
+        display: flex;
+        margin: auto;
+        p {
+            font-weight: 500;
+        }
+    }
+}
