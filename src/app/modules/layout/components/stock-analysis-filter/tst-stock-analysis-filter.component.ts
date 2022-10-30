@@ -7,6 +7,7 @@ import { TimeRange } from 'src/app/modules/core/helpers/time-range.model';
 import { MainService } from 'src/app/modules/core/services/main.service';
 
 
+
 export const MY_FORMATS = {
     parse: {
         dateInput: 'YYYY/DD/MM',
@@ -42,7 +43,7 @@ export class TstStockAnalysisFilterComponent implements OnInit {
     constructor(private mainService: MainService) {
 
     }
-    selectedTime!: string
+    selectedInterval!: string
     selectedStock!: string[]
     selectedDate!: string
     selectedInverval!: string
@@ -62,16 +63,20 @@ export class TstStockAnalysisFilterComponent implements OnInit {
         this.selectedDate = dateRangeEnd.value
     }
     sendAnalysisFilter() {
-        if (this.selectedTime == 'Günlük') {
+        if (this.selectedInterval == 'Günlük') {
             this.selectedInverval = "TIME_SERIES_INTRADAY"
-            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0]).subscribe((a: any) => {
-                console.log(a)
+            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0]).subscribe((metaData: any) => {
+                let symbol = metaData['Meta Data']
+                let timeSeries = metaData['Time Series (5min)']
+                this.mainService.sendTimeSeries.next(timeSeries)
+                console.log(symbol['2. Symbol'])
             })
         }
         else {
             this.selectedInverval = "TIME_SERIES_DAILY"
-            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0], this.selectedTime).subscribe((a: any) => {
+            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0], this.selectedInterval).subscribe((a) => {
                 console.log(a)
+                // a['Meta Data']
             })
         }
 

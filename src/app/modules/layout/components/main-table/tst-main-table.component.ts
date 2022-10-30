@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MainService } from 'src/app/modules/core/services/main.service';
 
 @Component({
     selector: 'tst-main-table',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class TstMainTableComponent implements OnInit {
-    constructor() { }
+    getVal!: string[]
+    constructor(private mainService: MainService) {
+        this.mainService.sendTimeSeries.subscribe(timeSeries => {
+            this.getVal = timeSeries
+        })
+    }
 
     ngOnInit() { }
 }

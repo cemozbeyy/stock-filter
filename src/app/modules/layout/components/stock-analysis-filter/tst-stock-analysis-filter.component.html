@@ -24,7 +24,7 @@
         <div class="ps-4">
             <mat-form-field appearance="fill">
                 <mat-label>Period Seçiniz</mat-label>
-                <select matNativeControl [(ngModel)]="selectedTime" name="time">
+                <select matNativeControl [(ngModel)]="selectedInterval" name="time">
                     <option *ngFor="let selectedTime of timeRange" [value]="selectedTime.timeName">
                         {{selectedTime.timeName}}
                     </option>
