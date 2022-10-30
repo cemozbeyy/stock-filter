@@ -45,7 +45,8 @@ const COMPONENTS = [
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
-        FormsModule
+        FormsModule,
+
     ],
     exports: [],
     schemas: [

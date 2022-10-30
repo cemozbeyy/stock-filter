@@ -4,6 +4,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 
 import { FormControl } from '@angular/forms';
 import { TimeRange } from 'src/app/modules/core/helpers/time-range.model';
+import { MainService } from 'src/app/modules/core/services/main.service';
 
 
 export const MY_FORMATS = {
@@ -38,12 +39,13 @@ export const MY_FORMATS = {
 })
 
 export class TstStockAnalysisFilterComponent implements OnInit {
-    constructor() {
+    constructor(private mainService: MainService) {
 
     }
     selectedTime!: string
     selectedStock!: string[]
     selectedDate!: string
+    selectedInverval!: string
     stockList: string[] = ['IBM', 'AAPL', 'MSFT', 'AMZN', 'GOOG'];
     timeRange: TimeRange[] = [
         { timeName: '15min' },
@@ -57,7 +59,22 @@ export class TstStockAnalysisFilterComponent implements OnInit {
 
     }
     dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-        console.log(dateRangeStart.value);
-        console.log(dateRangeEnd.value);
+        this.selectedDate = dateRangeEnd.value
+    }
+    sendAnalysisFilter() {
+        if (this.selectedTime == 'Günlük') {
+            this.selectedInverval = "TIME_SERIES_INTRADAY"
+            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0]).subscribe((a: any) => {
+                console.log(a)
+            })
+        }
+        else {
+            this.selectedInverval = "TIME_SERIES_DAILY"
+            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0], this.selectedTime).subscribe((a: any) => {
+                console.log(a)
+            })
+        }
+
+
     }
 }
