@@ -1,3 +1,5 @@
 export * from './sidenav/tst-sidenav.component'
 export * from './header/tst-header.component'
 export * from './main-table/tst-main-table.component'
+export * from './stock-analysis-filter/tst-stock-analysis-filter.component'
+export * from './analysis-chart/tst-chart.component'

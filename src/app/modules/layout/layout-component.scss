@@ -1,9 +1,13 @@
-.col-10 {
-    background-color: var(--bg-second-color);
-    margin: 0px;
-    padding: 0px;
-}
-.col-2 {
-    margin: 0px;
-    padding: 0px;
+.row {
+    margin: 0;
+    padding: 0;
+    .col-10 {
+        background-color: var(--bg-second-color);
+        margin: 0px;
+        padding: 0px;
+    }
+    .col-2 {
+        margin: 0px;
+        padding: 0px;
+    }
 }
