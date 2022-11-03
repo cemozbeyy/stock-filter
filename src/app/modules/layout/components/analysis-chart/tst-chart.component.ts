@@ -10,6 +10,8 @@ import {
   ApexGrid,
   ChartComponent
 } from "ng-apexcharts";
+import { MainService } from 'src/app/modules/core/services/main.service';
+
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -29,49 +31,51 @@ export type ChartOptions = {
 
 export class TstChartComponent implements OnInit {
   @ViewChild("chart") chart!: ChartComponent;
-  public chartOptions: Partial<ChartOptions>;
-  constructor() {
-    this.chartOptions = {
-      series: [
-        {
-          name: "Desktops",
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }
-      ],
-      chart: {
-        height: 350,
-        type: "line",
-        zoom: {
+  public chartOptions!: Partial<ChartOptions>;
+  chartStockValues!: []
+  constructor(private mainService: MainService) {
+    this.mainService.sendTimeSeries.subscribe((getValues: any) => {
+      this.chartStockValues = []
+      console.log(getValues["4. close"])
+      getValues.forEach((element: any) => {
+        this.chartStockValues.push((element["4. close"] as never))
+      });
+      console.log(this.chartStockValues)
+      this.chartOptions = {
+        series: [
+          {
+            name: "Stocks",
+            data: this.chartStockValues
+          }
+        ],
+        chart: {
+          height: 350,
+          type: "line",
+          zoom: {
+            enabled: false
+          }
+        },
+        dataLabels: {
           enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "straight"
-      },
+        },
+        stroke: {
+          curve: "straight"
+        },
 
-      grid: {
-        row: {
-          colors: ["#f3f3f3", "transparent"],
-          opacity: 0.5
+        grid: {
+          row: {
+            colors: ["#f3f3f3", "transparent"],
+            opacity: 0.5
+          }
+        },
+        xaxis: {
+          categories: [
+            "Period",
+
+          ]
         }
-      },
-      xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep"
-        ]
-      }
-    };
+      };
+    })
   }
 
   ngOnInit() { }

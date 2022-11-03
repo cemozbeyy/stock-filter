@@ -4,10 +4,10 @@
         <th>Period</th>
         <th>Değer</th>
     </tr>
-    <tr>
+    <tr *ngFor="let item of allValue">
+        <td>{{item}}</td>
         <td>testtest</td>
+        <td>{{item}}</td>
 
-        <td>{{getVal}}</td>
-        <td>testtest</td>
     </tr>
 </table>

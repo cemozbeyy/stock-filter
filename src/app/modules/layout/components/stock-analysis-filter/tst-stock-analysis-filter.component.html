@@ -7,7 +7,6 @@
                     <mat-option *ngFor="let topping of stockList" [value]="topping">{{topping}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            {{selectedStock}}
         </div>
         <div class="ps-4">
             <mat-form-field appearance="fill">
@@ -25,7 +24,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Period Seçiniz</mat-label>
                 <select matNativeControl [(ngModel)]="selectedInterval" name="time">
-                    <option *ngFor="let selectedTime of timeRange" [value]="selectedTime.timeName">
+                    <option *ngFor="let selectedTime of timeRange" [value]="selectedTime.value">
                         {{selectedTime.timeName}}
                     </option>
                 </select>

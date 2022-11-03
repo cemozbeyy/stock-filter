@@ -5,6 +5,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { FormControl } from '@angular/forms';
 import { TimeRange } from 'src/app/modules/core/helpers/time-range.model';
 import { MainService } from 'src/app/modules/core/services/main.service';
+import { GetStockAnalysisResponse, TimeIntervalType, TimeSeriesDateType } from 'src/app/modules/core/helpers/stock-info.model';
 
 
 
@@ -19,7 +20,6 @@ export const MY_FORMATS = {
         monthYearA11yLabel: 'YYYY MMM',
     },
 };
-
 
 @Component({
     selector: 'tst-filter',
@@ -43,16 +43,16 @@ export class TstStockAnalysisFilterComponent implements OnInit {
     constructor(private mainService: MainService) {
 
     }
-    selectedInterval!: string
+    selectedInterval!: TimeIntervalType
     selectedStock!: string[]
     selectedDate!: string
-    selectedInverval!: string
+    selectedInverval!: TimeIntervalType
     stockList: string[] = ['IBM', 'AAPL', 'MSFT', 'AMZN', 'GOOG'];
     timeRange: TimeRange[] = [
-        { timeName: '15min' },
-        { timeName: '30min' },
-        { timeName: '60min' },
-        { timeName: 'Günlük' },
+        { timeName: '15min', value: '15min' },
+        { timeName: '30min', value: '30min' },
+        { timeName: '60min', value: '60min' },
+        { timeName: 'Günlük', value: 'Daily' },
     ];
     stockType = new FormControl('');
 
@@ -63,20 +63,35 @@ export class TstStockAnalysisFilterComponent implements OnInit {
         this.selectedDate = dateRangeEnd.value
     }
     sendAnalysisFilter() {
-        if (this.selectedInterval == 'Günlük') {
-            this.selectedInverval = "TIME_SERIES_INTRADAY"
-            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0]).subscribe((metaData: any) => {
+        if (this.selectedInterval == 'Daily') {
+
+            this.mainService.sendStockDetails("TIME_SERIES_INTRADAY", this.selectedDate, this.selectedStock[0], this.selectedInterval).subscribe((metaData) => {
                 let symbol = metaData['Meta Data']
                 let timeSeries = metaData['Time Series (5min)']
-                this.mainService.sendTimeSeries.next(timeSeries)
-                console.log(symbol['2. Symbol'])
+
+                const flattedTimeSeries: any[] = []
+
+                Object.keys(timeSeries).map(key => {
+                    flattedTimeSeries.push({
+                        key,
+                        ...timeSeries[key as TimeSeriesDateType]
+                    })
+                })
+
+                console.log(flattedTimeSeries);
+
+                this.mainService.sendTimeSeries.next(flattedTimeSeries)
+                this.mainService.sendStockName.next((metaData["Meta Data"]["2. Symbol"] as any))
+
+                // this.mainService.sendTimeSeries.next(timeSeries)
+                console.log(metaData)
             })
         }
         else {
-            this.selectedInverval = "TIME_SERIES_DAILY"
-            this.mainService.sendStockDetails(this.selectedInverval, this.selectedDate, this.selectedStock[0], this.selectedInterval).subscribe((a) => {
-                console.log(a)
-                // a['Meta Data']
+            this.mainService.sendStockDetails("TIME_SERIES_DAILY", this.selectedDate, this.selectedStock[0], this.selectedInterval).subscribe((timeSeries: GetStockAnalysisResponse<`Time Series (Daily)`>) => {
+
+                //  Burayı yapamadım :(
+
             })
         }
 
